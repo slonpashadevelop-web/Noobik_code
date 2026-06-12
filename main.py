@@ -1,2 +1,1 @@
-print("Hello World")
-print("ХУЙ")
+sgqergeqrgqerg3qe
