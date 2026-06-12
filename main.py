@@ -1,20 +1,37 @@
-class Point:
-    color = "red"
-    circle = 2
+class DataBase:
+    __instance = None
 
-    def __init__(self, a=0 , b=0):
-        self.x = a
-        self.y = b
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls)
+
+        return cls.__instance
 
     def __del__(self):
-        print("Удаление" + str(self))
+        DataBase.__instance = None
 
-    def set_coords(self, x ,y ):
-        self.x = x
-        self.y = y
+    def __init__(self, user, psw, port):
+        self.user = user
+        self.psw = psw
+        self.port = port
 
-    def get_coords(self):
-        return (self.x, self.y)
+    def connect(self):
+        print(f"соединение с БД: {self.user}, {self.psw}, {self.port}")
 
-pt =Point()
-print(pt.__dict__)
+    def close(self):
+        print("закрытие соединения с БД")
+
+    def read(self):
+        return "данные из БД"
+
+    def write(self, data):
+        print(f"запись в БД {data}")
+
+db = DataBase("asas", "1234", 80)
+db2 = DataBase("as2as", "12234", 820)
+
+db.connect()
+db2.connect()
+
+print(id(db))
+print(id(db2))
