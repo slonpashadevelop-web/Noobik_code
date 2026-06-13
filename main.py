@@ -1,37 +1,16 @@
-class DataBase:
-    __instance = None
+class Dog:
+    def __init__(self, name, age, breed):
+        self.name = name
+        self.age = age
+        self.breed = breed
 
-    def __new__(cls, *args, **kwargs):
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls)
+    def info(self):
+        print(self.name, self.age, self.breed)
 
-        return cls.__instance
+    def birthday(self):
+        self.age += 1
+        print(f'{self.name} is {self.age} years old')
 
-    def __del__(self):
-        DataBase.__instance = None
-
-    def __init__(self, user, psw, port):
-        self.user = user
-        self.psw = psw
-        self.port = port
-
-    def connect(self):
-        print(f"соединение с БД: {self.user}, {self.psw}, {self.port}")
-
-    def close(self):
-        print("закрытие соединения с БД")
-
-    def read(self):
-        return "данные из БД"
-
-    def write(self, data):
-        print(f"запись в БД {data}")
-
-db = DataBase("asas", "1234", 80)
-db2 = DataBase("as2as", "12234", 820)
-
-db.connect()
-db2.connect()
-
-print(id(db))
-print(id(db2))
+d = Dog("Рекс", 3, "Овчарка")
+d.birthday()
+d.birthday()
