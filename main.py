@@ -1,26 +1,42 @@
-from accessify import private, protected
-class Point:
-    def __init__(self, x=0, y=0):
-        if self.check_value(x) and self.check_value(y):
-            self.__x = x
-            self.__y = y
+class BankAccount:
 
-    @private
+    def __init__(self, owner,balance ):
+        self.__owner = None
+        self.__balance = 0
+        if self.__check_owner(owner) and self.__check_balance(balance):
+            self.__balance = balance
+            self.__owner = owner
+
+
     @classmethod
-    def check_value(cls, x):
-        return type(x) in [int, float]
+    def __check_owner(cls,owner):
+        return type(owner) in [str]
 
-    def set_coord(self, x, y):
-        if self.check_value(x) and self.check_value(y):
-         self.__x = x
-         self.__y = y
+
+    @classmethod
+    def __check_balance(cls,balance):
+        return type(balance) in [int,float] and balance > 0
+
+    def set_owner(self, owner):
+        if self.__check_owner(owner):
+            self.__owner = owner
         else:
-            raise ValueError("Invalid coordinates")
+            raise ValueError('не должно бфть строкой')
 
-    def get(self):
-        return self.__x, self.__y
+    def get_owner(self):
+        return self.__owner
 
+    def get_balance(self):
+        return  self.__balance
 
-pt = Point(1,2)
-pt.set_coord(100,4)
-pt.check_value(100)
+    def deposit(self,amount):
+        if self.__check_balance(amount):
+            self.__balance += amount
+        else:
+            raise ValueError(" no")
+
+    def withdraw(self,amount):
+        if self.__check_balance(amount) and amount <= self.__balance:
+            self.__balance -= amount
+        else:
+            raise ValueError(" no")
