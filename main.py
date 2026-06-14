@@ -1,19 +1,26 @@
-class Server:
+from accessify import private, protected
+class Point:
+    def __init__(self, x=0, y=0):
+        if self.check_value(x) and self.check_value(y):
+            self.__x = x
+            self.__y = y
 
-    def __init__(self, host, port):
-        self.host = host
-        self.port = port
+    @private
+    @classmethod
+    def check_value(cls, x):
+        return type(x) in [int, float]
 
-    def __setattr__(self, key, value):
-        if key == "port" and not 0 <= value <= 65535:
-            raise ValueError("Port must be between 0 and 65535")
+    def set_coord(self, x, y):
+        if self.check_value(x) and self.check_value(y):
+         self.__x = x
+         self.__y = y
         else:
-            object.__setattr__(self, key, value)
+            raise ValueError("Invalid coordinates")
+
+    def get(self):
+        return self.__x, self.__y
 
 
-    def __getattr__(self, key):
-        return None
-
-s = Server("localhost", 8080)
-print(s.port)      # 8080
-print(s.database)  # None
+pt = Point(1,2)
+pt.set_coord(100,4)
+pt.check_value(100)
