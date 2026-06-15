@@ -1,36 +1,29 @@
-class Car:
+class Point:
+    MAX_COORD = 100
+    MIN_COORD = 0
 
-    def __init__(self, brand):
-        self.__brand = brand
-        self.__speed = 0
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-    @classmethod
-    def __check_amount(cls, amount):
-        return type(amount) in [int, float] and amount > 0
+    def set_coord(self, x, y):
+        if self.MIN_COORD <= x <= self.MAX_COORD:
+         self.x = x
+         self.y = y
 
-    def accelerate(self, amount):
-        if self.__check_amount(amount):
-            self.__speed += amount
+    def __getattribute__(self, item):
+        if item == 'x':
+            raise ValueError("Доступа не булет")
+        return object.__getattribute__(self, item)
+
+    def __setattr__(self, key, value):
+        if key == 'z':
+            raise AttributeError
         else:
-            raise ValueError("Not a valid amount")
-    def brake(self, amount):
-        if self.__check_amount(amount):
-            self.__speed = max(0, self.__speed - amount)
-        else:
-            raise ValueError("Not a valid amount")
+            object.__setattr__(self, key, value)
 
-    def get_speed(self):
-        return self.__speed
-    def get_brand(self):
-        return self.__brand
+    def __getattr__(self, item):
+        return False
 
-car = Car("Toyota")
-print(car.get_brand())
-print(car.get_speed())
-car.accelerate(60)
-print(car.get_speed())
-car.brake(20)
-print(car.get_speed())
-car.brake(999)
-print(car.get_speed())
-car.accelerate("fast")
+pt1 = Point(1, 2)
+pt2 = Point(10, 20)
