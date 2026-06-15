@@ -1,42 +1,36 @@
-class BankAccount:
+class Car:
 
-    def __init__(self, owner,balance ):
-        self.__owner = None
-        self.__balance = 0
-        if self.__check_owner(owner) and self.__check_balance(balance):
-            self.__balance = balance
-            self.__owner = owner
-
+    def __init__(self, brand):
+        self.__brand = brand
+        self.__speed = 0
 
     @classmethod
-    def __check_owner(cls,owner):
-        return type(owner) in [str]
+    def __check_amount(cls, amount):
+        return type(amount) in [int, float] and amount > 0
 
-
-    @classmethod
-    def __check_balance(cls,balance):
-        return type(balance) in [int,float] and balance > 0
-
-    def set_owner(self, owner):
-        if self.__check_owner(owner):
-            self.__owner = owner
+    def accelerate(self, amount):
+        if self.__check_amount(amount):
+            self.__speed += amount
         else:
-            raise ValueError('не должно бфть строкой')
-
-    def get_owner(self):
-        return self.__owner
-
-    def get_balance(self):
-        return  self.__balance
-
-    def deposit(self,amount):
-        if self.__check_balance(amount):
-            self.__balance += amount
+            raise ValueError("Not a valid amount")
+    def brake(self, amount):
+        if self.__check_amount(amount):
+            self.__speed = max(0, self.__speed - amount)
         else:
-            raise ValueError(" no")
+            raise ValueError("Not a valid amount")
 
-    def withdraw(self,amount):
-        if self.__check_balance(amount) and amount <= self.__balance:
-            self.__balance -= amount
-        else:
-            raise ValueError(" no")
+    def get_speed(self):
+        return self.__speed
+    def get_brand(self):
+        return self.__brand
+
+car = Car("Toyota")
+print(car.get_brand())
+print(car.get_speed())
+car.accelerate(60)
+print(car.get_speed())
+car.brake(20)
+print(car.get_speed())
+car.brake(999)
+print(car.get_speed())
+car.accelerate("fast")
