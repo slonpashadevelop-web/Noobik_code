@@ -1,8 +1,10 @@
 class Rectangle:
 
     def __init__(self, width, height):
-        self.check_value(width)
-        self.check_value(height)
+        if not self.check_value(width):
+            raise ValueError("width must be greater than 0")
+        if not self.check_value(height):
+            raise ValueError("height must be greater than 0")
 
         self.__width = width
         self.__height = height
