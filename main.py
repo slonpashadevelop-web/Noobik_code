@@ -44,11 +44,3 @@ class Rectangle:
         return 2 * (self.__width * self.__height)
 
 
-r = Rectangle(4, 5)
-print(r.width)       # 4
-print(r.height)      # 5
-print(r.area)         # 20
-print(r.perimeter)    # 18
-
-r.width = 10
-print(r.area)          # 50
